@@ -71,7 +71,7 @@ jobs:
     - name: Conan version
       run: echo "${{ steps.conan.outputs.version }}"
 
-    - if: runner.os == 'macos-15'
+    - if: runner.os == 'macOS'
       run: |
         brew install llvm@18 \
         && echo 'export PATH="/opt/homebrew/opt/llvm@18/bin:$PATH"' >> /Users/runner/.bash_profile \
