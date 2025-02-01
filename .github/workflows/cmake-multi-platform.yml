@@ -55,9 +55,16 @@ jobs:
             c_compiler: cl
           - os: macos-latest
             c_compiler: cl
+          - os: macos-latest
+            c_compiler: gcc
 
     steps:
     - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+         python-version: '3.10'
+    - name: Get Conan
+      uses: turtlebrowser/get-conan@main
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -65,11 +72,6 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
-    # https://stackoverflow.com/questions/72565963/installing-dependencies-with-conan-on-github-actions-takes-too-long
-    - name: Conan installation
-      id: conan
-      uses: turtlebrowser/get-conan@v1.0
 
     - name: Conan version
       run: echo "${{ steps.conan.outputs.version }}"
