@@ -71,6 +71,14 @@ jobs:
     - name: Conan version
       run: echo "${{ steps.conan.outputs.version }}"
 
+    - if: runner.os == 'macos-15'
+      run: |
+        brew install llvm@18 \
+        && echo 'export PATH="/opt/homebrew/opt/llvm@18/bin:$PATH"' >> /Users/runner/.bash_profile \
+        && source /Users/runner/.bash_profile \
+        && which clang++
+
+
     - name: Create default Conan profile
       run: conan profile detect
 
