@@ -80,7 +80,7 @@ jobs:
       run: conan profile detect
 
     - if: runner.os == 'Windows'
-      run: c:\windows\system32\xcopy.exe /y ${{github.workspace}}\scripts\conan_profiles\github_runner_windows ~\.conan2\profiles\default
+      run: c:\windows\system32\xcopy.exe ${{github.workspace}}\scripts\conan_profiles\github_runner_windows ~\.conan2\profiles\default /Y
 
     - name: Fix Conan profile to Debug
       run: |
@@ -90,7 +90,7 @@ jobs:
           sed -i '' 's/Release/Debug/g' /Users/runner/.conan2/profiles/default
         fi
 
-    - name: Fix Conan profile to C++20
+    - name: Fix Conan profile to C++23
       run: |
         if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
           sed -i 's/gnu17/gnu23/g' /home/runner/.conan2/profiles/default
