@@ -80,7 +80,7 @@ jobs:
       run: conan profile detect
 
     - if: runner.os == 'Windows'
-      run: c:\windows\system32\xcopy.exe ${{github.workspace}}\scripts\conan_profiles\github_runner_windows ~\.conan2\profiles\default /Y
+      run: c:\windows\system32\xcopy.exe ${{github.workspace}}\scripts\conan_profiles\github_runner_windows ~\.conan2\profiles\default /Y /i
 
     - name: Fix Conan profile to Debug
       run: |
