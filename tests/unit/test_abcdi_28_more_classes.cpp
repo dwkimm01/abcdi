@@ -98,10 +98,11 @@ TEST(test_abcdi_28_more_classes, many_classes) {
     sp.bind<ireader>().to<reader1>();
     sp.bind<ireader>().to<reader2>();
 
-    std::cout << "test_abcdi_28_more_classes::many_classes, contents" << sp << std::endl;
-
     // (anonymous namespace)::reader2
     EXPECT_TRUE(sp.make_name_pre_bound("dma2"));
+
+    std::cout << "test_abcdi_28_more_classes::many_classes, contents" << sp << std::endl;
+
     EXPECT_TRUE(sp.make_name_pre_bound("reader2"));
     auto reader = sp.make_injected<std::shared_ptr<ireader>>();
     EXPECT_NE(nullptr, reader);
