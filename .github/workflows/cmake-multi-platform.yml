@@ -92,6 +92,7 @@ jobs:
         fi
 
     - name: Fix Conan Profile to C++23
+      if: runner.os != 'Windows'
       run: |
         if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
           sed -i 's/gnu17/gnu23/g' /home/runner/.conan2/profiles/default
