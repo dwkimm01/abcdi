@@ -70,10 +70,24 @@ jobs:
       run: conan profile detect
 
     - name: Fix Conan profile to Debug
-      run: sed -i 's/Release/Debug/g' /home/runner/.conan2/profiles/default
+      run: |
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+          sed -i 's/Release/Debug/g' /home/runner/.conan2/profiles/default
+        elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+          sed -i 's/Release/Debug/g' /home/runner/.conan2/profiles/default
+        else
+          (Get-Content ~/.conan2/profiles/default) -replace 'Release', 'Debug' | Out-File -encoding ASCII ~/.conan2/profiles/default
+        fi
 
     - name: Fix Conan profile to C++20
-      run: sed -i 's/gnu17/gnu23/g' /home/runner/.conan2/profiles/default
+      run: |
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+          sed -i 's/gnu17/gnu23/g' /home/runner/.conan2/profiles/default
+        elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+          sed -i 's/gnu17/gnu23/g' /home/runner/.conan2/profiles/default
+        else
+          (Get-Content ~/.conan2/profiles/default) -replace 'gnu17', 'gnu23' | Out-File -encoding ASCII ~/.conan2/profiles/default
+        fi
 
     - name: Conan install dependencies
       run: conan install . --output-folder=${{github.workspace}}/build --build=missing
