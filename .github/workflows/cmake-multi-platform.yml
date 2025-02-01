@@ -78,7 +78,6 @@ jobs:
         && source /Users/runner/.bash_profile \
         && which clang++
 
-
     - name: Create default Conan profile
       run: conan profile detect
 
