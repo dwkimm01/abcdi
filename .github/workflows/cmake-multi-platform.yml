@@ -69,6 +69,12 @@ jobs:
     - name: Create default Conan profile
       run: conan profile detect
 
+    - name: Fix Conan profile to Debug
+      run: sed -i 's/Release/Debug/g' /home/runner/.conan2/profiles/default
+
+    - name: Fix Conan profile to C++20
+      run: sed -i 's/gnu17/gnu23/g' /home/runner/.conan2/profiles/default
+
     - name: Conan install dependencies
       run: conan install . --output-folder=${{github.workspace}}/build --build=missing
 
