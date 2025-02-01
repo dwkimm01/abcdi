@@ -8,21 +8,26 @@ A Basic C++ Dependency Injection library, one/minimal header(s), no dependencies
 
 Header only mostly because of template use and no dependencies unless you want to build unit tests.
 
-There are many dependency inject libraries/frameworks.  For C# there is [Ninject](https://github.com/ninject/Ninject)
-and even C++ has a few. 
+### Documentation
+* [Introduction](#introduction)
+  * [Quick Start](#quick-start)
+    * [Building with cmake](docs/building_with_cmake.md)
+    * [Motivating Example](docs/motivating_example.md)
+  * [Tutorial]
+    * Value
+    * Reference
+    * Pointer
+    * Shared Pointer
+    * Unique Pointer
+    * Vector
+    * Classes/Structs - Picks ctor with most params
+    * Interface Binding(s)
+    * Value Binding
+    * Lifetime Notes
+* [Alternatives](#alternatives)
+* [Inspiring Example](#inspiration)
 
-1) [[Boost::ext].DI](https://github.com/boost-ext/di)
-1) [7bitDI](https://github.com/7bitcoder/7bitDI)
-1) [Cinject](https://github.com/mjirous/cinject)
-1) [Fruit](https://github.com/google/fruit)
-1) [Kangaru](https://github.com/gracicot/kangaru)
-1) [CPPServiceLocator](https://github.com/stevef51/CPPServiceLocator)
-1) [Injecttor](https://github.com/Fabrizio86/Injecttor)
-1) [inject](https://github.com/z9u2k/inject)
-1) [dicpp](https://bitbucket.org/cheez/dicpp/wiki/Home)
-1) [Infector++](https://github.com/Darelbi/Infectorpp2)
-
-For a more complete set of comparisons see [test ioc c++](https://github.com/d-led/test-ioc-cpp)
+## Introduction
 
 Any of those options above are great and if they suit your needs they should be preferred.  The motivation for abcdi was
 a library that had:
@@ -38,12 +43,23 @@ a library that had:
 
 ---
 
-### Quick start
+## Quick start
 
-#### Download
-> abcdi requires only one header file, the latest header is [here](http://gitea.ubnt.local:3000/dwkimm01/abcdi/raw/branch/master/include/abcdi/abcdi.h)
+### Download
+abcdi requires only two header files: [abcdi.h](https://raw.githubusercontent.com/dwkimm01/abcdi/refs/heads/main/include/abcdi/abcdi.h)
+and [abcdi_util.h](https://raw.githubusercontent.com/dwkimm01/abcdi/refs/heads/main/include/abcdi/abcdi_util.h)
+put them both into a directory named abcdi
 
-#### Quick guide - Create object graph
+### Building repository unit tests
+```shell
+pipx install conan
+conan profile detect
+conan install . --output-folder=build --build=missing
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=./build/build/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+```
+
+### Create object graph
 
 ```cpp
 #include <abcdi/abdci.hpp>
@@ -71,14 +87,14 @@ int main() {
 ```
 
 #### Compile
-
+To build an executable that uses abcdi just make sure to include the abcdi path
 * **GCC/Clang**
   ```sh
-  $CXX -std=c++23 -O2 -fno-exceptions -Wall -Werror -pedantic-errors main.cpp
+  $CXX -std=c++23 -O2 -fno-exceptions -Wall -Werror -pedantic-errors -Iabcdi main.cpp
   ```
 * **MSVC**
   ```sh
-  cl /std:c++23 /Ox /W3 main.cpp
+  cl /std:c++23 /Ox /W3 /I "abcdi" main.cpp
   ```
 
 
@@ -110,20 +126,25 @@ int main() {
 
 ---------------------------------------
 
-### Documentation
-* [Introduction](https://blah.org)
-  * [Quick Start](https://blah.org)
-    * [Building with cmake](docs/building_with_cmake.md)
-    * [Motivating Example](docs/motivating_example.md)
-  * [Tutorial]
-    * Value
-    * Reference
-    * Pointer
-    * Shared Pointer
-    * Unique Pointer
-    * Vector
-    * Classes/Structs - Picks ctor with most params
-    * Interface Binding(s)
-    * Value Binding
-    * Lifetime Notes
 
+## Alternatives
+
+There are many dependency inject libraries/frameworks.  For C# there is [Ninject](https://github.com/ninject/Ninject)
+and even C++ has a few.
+
+1) [[Boost::ext].DI](https://github.com/boost-ext/di)
+1) [7bitDI](https://github.com/7bitcoder/7bitDI)
+1) [Cinject](https://github.com/mjirous/cinject)
+1) [Fruit](https://github.com/google/fruit)
+1) [Kangaru](https://github.com/gracicot/kangaru)
+1) [CPPServiceLocator](https://github.com/stevef51/CPPServiceLocator)
+1) [Injecttor](https://github.com/Fabrizio86/Injecttor)
+1) [inject](https://github.com/z9u2k/inject)
+1) [dicpp](https://bitbucket.org/cheez/dicpp/wiki/Home)
+1) [Infector++](https://github.com/Darelbi/Infectorpp2)
+
+For a set of comparisons see [test ioc c++](https://github.com/d-led/test-ioc-cpp)
+
+## Inspiration
+These blog posts on [Automated instance construction in C++](https://schneide.blog/2022/06/02/automated-instance-construction-in-c/)
+were the inspiration to start this project.
