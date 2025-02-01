@@ -14,16 +14,7 @@ Header only mostly because of template use and no dependencies unless you want t
     * [Building with cmake](docs/building_with_cmake.md)
     * [Motivating Example](docs/motivating_example.md)
   * [Tutorial]
-    * Value
-    * Reference
-    * Pointer
-    * Shared Pointer
-    * Unique Pointer
-    * Vector
-    * Classes/Structs - Picks ctor with most params
-    * Interface Binding(s)
-    * Value Binding
-    * Lifetime Notes
+    * [Create Object Graph](#create-object-graph)
 * [Alternatives](#alternatives)
 * [Inspiring Example](#inspiration)
 
@@ -59,7 +50,7 @@ cmake -B build -DCMAKE_TOOLCHAIN_FILE=./build/build/Release/generators/conan_too
 cmake --build build --config Release
 ```
 
-### Create object graph
+### Create Object Graph
 
 ```cpp
 #include <abcdi/abdci.hpp>
