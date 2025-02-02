@@ -82,7 +82,7 @@ jobs:
         && clang++ --version
 
     - name: Create default Conan profile
-      run: conan profile detect
+      run: source /Users/runner/.bash_profile && conan profile detect
 
     - if: runner.os == 'Windows'
       run: echo f | xcopy /f /y ${{github.workspace}}\scripts\conan_profiles\github_runner_windows C:\Users\runneradmin\.conan2\profiles\default
@@ -116,7 +116,7 @@ jobs:
       run: conan install . --output-folder=${{github.workspace}}/build --build=missing
 
     - if: runner.os == 'Windows'
-      run: dir ${{github.workspace}}\build\build
+      run: dir ${{github.workspace}}\build\build\generators
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
