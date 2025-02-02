@@ -282,6 +282,7 @@ public:
 
     ~node_container_unique_parent() override = default;
 
+// TODO, since this is really only used for printing should be intptr_t
     [[nodiscard]]
     const void* address() const override {
         if (!m_is_created()) {
