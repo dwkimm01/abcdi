@@ -3,6 +3,7 @@ project(abcdi)
 
 option(RUN_TESTS "Build the tests" ON)
 
+SET(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 23)
 #if(WIN32)
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")

@@ -126,7 +126,7 @@ jobs:
 
     - name: Configure CMake macOS
       if: runner.os == 'macOS'
-      run: source /Users/runner/.bash_profile && cmake -B build -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/build/build/Debug/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug
+      run: source /Users/runner/.bash_profile && cmake -B build -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/build/build/Debug/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug
 
     - name: Configure CMake Windows
       if: runner.os == 'Windows'
