@@ -121,7 +121,7 @@ jobs:
       run: dir ${{github.workspace}}\build\build\generators
 
     - name: Configure CMake
-      if: runner.os != 'Linux'
+      if: runner.os != 'Ubuntu'
       run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/build/build/Debug/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug
 
     - name: Configure CMake
