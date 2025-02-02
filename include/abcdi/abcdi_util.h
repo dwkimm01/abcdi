@@ -3,7 +3,10 @@
 // Created by dwkimm01 on 6/19/24.
 //
 
+#if defined(__linux__) || defined(__APPLE__)
 #include <cxxabi.h>
+#elif _WIN32
+#endif
 #include <memory>
 #include <string>
 #include <type_traits>
@@ -23,6 +26,7 @@ namespace abcdi {
 class abcdi_demangle {
 public:
     static std::string demangle(const char* name) {
+#if defined(__linux__) || defined(__APPLE__)
         int status = -4;
 
         const std::unique_ptr<char, void(*)(void*)> res {
@@ -31,6 +35,9 @@ public:
         };
 
         return 0 == status ? res.get() : name;
+#elif
+        return name;
+#endif
     }
 
     template <typename T>
