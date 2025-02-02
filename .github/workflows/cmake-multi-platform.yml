@@ -76,7 +76,7 @@ jobs:
         brew install llvm@18 \
         && echo 'export PATH="/opt/homebrew/opt/llvm@18/bin:$PATH"' >> /Users/runner/.bash_profile \
         && echo 'export CC="/opt/homebrew/opt/llvm@18/bin/clang"' >> /Users/runner/.bash_profile \
-        && echo 'export CXX="/opt/homebrew/opt/llvm@18/bin/clang++' >> /Users/runner/.bash_profile \
+        && echo 'export CXX="/opt/homebrew/opt/llvm@18/bin/clang++"' >> /Users/runner/.bash_profile \
         && source /Users/runner/.bash_profile \
         && which clang++
 
@@ -106,6 +106,9 @@ jobs:
 
     - name: Conan install dependencies
       run: conan install . --output-folder=${{github.workspace}}/build --build=missing
+
+    - if: runner.os == 'Windows'
+      run: dir ${{github.workspace}}\build\build\Debug\generators\
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
