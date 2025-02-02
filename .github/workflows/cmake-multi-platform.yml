@@ -79,10 +79,12 @@ jobs:
         && echo 'export CXX="/opt/homebrew/opt/llvm@18/bin/clang++"' >> /Users/runner/.bash_profile \
         && source /Users/runner/.bash_profile \
         && which clang++ \
-        && clang++ --version
+        && clang++ --version \
+        && conan profile detect
 
     - name: Create default Conan profile
-      run: source /Users/runner/.bash_profile && conan profile detect
+      if: runner.os != 'macOS'
+      run: conan profile detect
 
     - if: runner.os == 'Windows'
       run: echo f | xcopy /f /y ${{github.workspace}}\scripts\conan_profiles\github_runner_windows C:\Users\runneradmin\.conan2\profiles\default
