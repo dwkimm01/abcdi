@@ -68,9 +68,6 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - name: Conan version
-      run: echo "${{ steps.conan.outputs.version }}"
-
     - if: runner.os == 'macOS'
       run: |
         brew install llvm@18 \

@@ -313,7 +313,7 @@ private:
             }
         }
 
-        throw std::runtime_error("No known way to handle type normal: " + abcdi_demangle::demangle<T>());
+        // throw std::runtime_error("No known way to handle type normal: " + abcdi_demangle::demangle<T>());
     }
 
     template <typename T, std::size_t MaxCtorParams = 16>
