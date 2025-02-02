@@ -134,8 +134,16 @@ jobs:
       # run: cmake --build ${{github.workspace}}/build --config ${{ matrix.build_type }}
       run: cmake --build ${{github.workspace}}/build --config Debug
 
-    - name: Test
+    - name: Test Linx/macOS
+      if: runner.os != 'Windows'
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ${{github.workspace}}/build/tests/unit/abcdi_test
+
+    - name: Test Windows
+      if: runner.os == 'Windows'
+      working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ${{github.workspace}}\build\tests\unit\abcdi_test.exe
