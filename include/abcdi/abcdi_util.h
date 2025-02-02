@@ -35,7 +35,7 @@ public:
         };
 
         return 0 == status ? res.get() : name;
-#elif
+#else
         return name;
 #endif
     }
