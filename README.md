@@ -1,4 +1,5 @@
 <a href="https://mit-license.org/" target="_blank">![MIT License](https://img.shields.io/badge/license-mit-blue.svg)</a>
+<a href="https://github.com/dwkimm01/abcdi/actions/workflows/cmake-multi-platform.yml" target="_blank">![unit test workflow](https://github.com/dwkimm01/abcdi/actions/workflows/cmake-multi-platform.yml/badge.svg?branch=main)</a>
 
 ---------------------------------------
 
