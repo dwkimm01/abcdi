@@ -130,11 +130,12 @@ jobs:
 
     - name: Configure CMake Windows
       if: runner.os == 'Windows'
-      run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/build/build/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug
+      run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}\build\build\generators\conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build ${{github.workspace}}/build --config ${{ matrix.build_type }}
+      # run: cmake --build ${{github.workspace}}/build --config ${{ matrix.build_type }}
+      run: cmake --build ${{github.workspace}}/build --config Debug
 
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
