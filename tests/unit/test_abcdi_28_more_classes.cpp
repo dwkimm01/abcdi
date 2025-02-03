@@ -81,16 +81,7 @@ private:
     std::vector<uint8_t> m_buffer;
 };
 
-
-
-class foo_no_param {
-public:
-    foo_no_param() = default;
-    int get() const { return 1; }
-};
-
 TEST(test_abcdi_28_more_classes, many_classes) {
-// TODO, broken on macos-latest
     abcdi::service_provider sp;
     sp.bind<idma>().to<dma1>();
     sp.bind<idma>().to<dma2>();
@@ -98,10 +89,7 @@ TEST(test_abcdi_28_more_classes, many_classes) {
     sp.bind<ireader>().to<reader1>();
     sp.bind<ireader>().to<reader2>();
 
-    // (anonymous namespace)::reader2
     EXPECT_TRUE(sp.make_name_pre_bound("dma2"));
-
-    std::cout << "test_abcdi_28_more_classes::many_classes, contents:\n" << sp << std::endl;
 
     EXPECT_TRUE(sp.make_name_pre_bound("reader2"));
     auto reader = sp.make_injected<std::shared_ptr<ireader>>();
