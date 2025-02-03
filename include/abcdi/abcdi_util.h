@@ -57,6 +57,7 @@ public:
     [[nodiscard]] virtual size_t hash_code() const = 0;
     [[nodiscard]] virtual const std::string & underlying_type_name() const = 0;
     [[nodiscard]] virtual size_t use_count() const = 0;
+    [[nodiscard]] virtual bool is_unique_ptr() const = 0;
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -90,6 +91,7 @@ public:
     [[nodiscard]] size_t hash_code() const override = 0;
     [[nodiscard]] const std::string & underlying_type_name() const override = 0;
     [[nodiscard]] size_t use_count() const override = 0;
+    [[nodiscard]] bool is_unique_ptr() const override = 0;
 };
 
 // Purpose: Child which can create and hold actual instance as a shared_ptr<CHILD_T>
@@ -138,6 +140,7 @@ public:
     [[nodiscard]] size_t hash_code() const override { return typeid(underlying_t).hash_code(); }
     [[nodiscard]] const std::string & underlying_type_name() const override { return m_underlying_type_name; }
     [[nodiscard]] size_t use_count() const override { return m_data.use_count(); }
+    [[nodiscard]] bool is_unique_ptr() const override { return false; }
 
 private:
     std::string m_underlying_type_name {abcdi_demangle::demangle<underlying_t>()};
@@ -203,10 +206,11 @@ public:
         return m_smart_child_raw;
     }
 
+    [[nodiscard]] size_t hash_code() const override { return typeid(underlying_t).hash_code(); }
     [[nodiscard]] const std::string & underlying_type_name() const override { return m_underlying_type_name; }
     // Note, this is a little weird, but should work
     [[nodiscard]] size_t use_count() const override { if (!m_is_created()) { return 0; } return m_get_fn().use_count(); }
-    [[nodiscard]] size_t hash_code() const override { return typeid(underlying_t).hash_code(); }
+    [[nodiscard]] bool is_unique_ptr() const override { return false; }
 
 private:
     std::string m_underlying_type_name {abcdi_demangle::demangle<underlying_t>()};
@@ -238,6 +242,7 @@ public:
     [[nodiscard]] size_t hash_code() const override = 0;
     [[nodiscard]] const std::string & underlying_type_name() const override = 0;
     [[nodiscard]] size_t use_count() const override = 0;
+    [[nodiscard]] bool is_unique_ptr() const override = 0;
 };
 
 
@@ -264,6 +269,7 @@ public:
     [[nodiscard]] size_t hash_code() const override { return typeid(raw_ptr_t).hash_code(); }
     [[nodiscard]] const std::string & underlying_type_name() const override { return m_underlying_type_name; }
     [[nodiscard]] size_t use_count() const override { return nullptr != m_data ? 1 : 0; }
+    [[nodiscard]] bool is_unique_ptr() const override { return true; }
 
 private:
     std::string m_underlying_type_name {abcdi_demangle::demangle<underlying_type>()};
@@ -323,9 +329,10 @@ public:
         return m_child_raw;
     }
 
+    [[nodiscard]] size_t hash_code() const override { return typeid(underlying_type).hash_code(); }
     [[nodiscard]] const std::string & underlying_type_name() const override { return m_underlying_type_name; }
     [[nodiscard]] size_t use_count() const override { if (!m_is_created()) { return 0; } return 1; }
-    [[nodiscard]] size_t hash_code() const override { return typeid(underlying_type).hash_code(); }
+    [[nodiscard]] bool is_unique_ptr() const override { return true; }
 
 private:
     std::string m_underlying_type_name {abcdi_demangle::demangle<underlying_type>()};

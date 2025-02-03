@@ -30,7 +30,14 @@ public:
     bool make_name_pre_bound(const std::string & name) const {
         DOUT("make_name_pre_bound: " << name);
 
+        const bool requested_name_is_for_unique_ptr = (std::string::npos != name.find("std::unique_ptr<")) || (std::string::npos != name.find("std::__1::unique_ptr<"));
+
         for (auto & [entry_type, entry_node_vec] : m_node_map) {
+            if (entry_node_vec.empty()) {
+                DOUT("make_name_pre_bound, empty node vec found: " << entry_type << " " << entry_node_vec);
+                continue;
+            }
+
             const std::string node_name = abcdi_demangle::demangle(entry_type.get().name());
             DOUT("make name pre bound: " << node_name);
 
@@ -38,17 +45,22 @@ public:
                 continue;
             }
 
-            // This isn't great, but try to discern between a unique_ptr being requested and everything else
-            if (name.find("std::unique") != std::string::npos) {
-                if (node_name.find("std::unique") == std::string::npos) {
-                    continue;
-                }
+            if (requested_name_is_for_unique_ptr != entry_node_vec.at(0)->is_unique_ptr()) {
+                DOUT("requested_name_is_for_unique_ptr != entry_node_vec is_unique: " << name);
+                continue;
             }
-            else {
-                if (node_name.find("std::unique") != std::string::npos) {
-                    continue;
-                }
-            }
+
+            // // This isn't great, but try to discern between a unique_ptr being requested and everything else
+            // if (name.find("std::unique") != std::string::npos) {
+            //     if (node_name.find("std::unique") == std::string::npos) {
+            //         continue;
+            //     }
+            // }
+            // else {
+            //     if (node_name.find("std::unique") != std::string::npos) {
+            //         continue;
+            //     }
+            // }
 
             DOUT("Found node named: " << node_name << ", will try to find created one first, then create if need be, entry count: " << entry_node_vec.size());
             for (auto const & node : entry_node_vec) {
