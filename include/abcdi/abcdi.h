@@ -27,10 +27,8 @@ public:
         }
     }
 
-    bool make_name_pre_bound(const std::string & name) const {
+    bool make_name_pre_bound(const std::string & name, const bool requested_name_is_for_unique_ptr = false) const {
         DOUT("make_name_pre_bound: " << name);
-
-        const bool requested_name_is_for_unique_ptr = (std::string::npos != name.find("std::unique_ptr<")) || (std::string::npos != name.find("std::__1::unique_ptr<"));
 
         for (auto & [entry_type, entry_node_vec] : m_node_map) {
             if (entry_node_vec.empty()) {
@@ -49,18 +47,6 @@ public:
                 DOUT("requested_name_is_for_unique_ptr != entry_node_vec is_unique: " << name);
                 continue;
             }
-
-            // // This isn't great, but try to discern between a unique_ptr being requested and everything else
-            // if (name.find("std::unique") != std::string::npos) {
-            //     if (node_name.find("std::unique") == std::string::npos) {
-            //         continue;
-            //     }
-            // }
-            // else {
-            //     if (node_name.find("std::unique") != std::string::npos) {
-            //         continue;
-            //     }
-            // }
 
             DOUT("Found node named: " << node_name << ", will try to find created one first, then create if need be, entry count: " << entry_node_vec.size());
             for (auto const & node : entry_node_vec) {

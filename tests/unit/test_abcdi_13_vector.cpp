@@ -40,7 +40,6 @@ TEST(test_abcdi_13_vector, sp_vec_foo_empty) {
 }
 
 TEST(test_abcdi_13_vector, sp_vec_foo_not_empty) {
-// TODO, broken on  macos-latest
     service_provider p;
     auto ptr = p.make_injected<std::shared_ptr<foo_abcdi_13_vector>>();
     ptr->i = 43;
